@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Expo
+.expo/
+
+# Uploaded files (temporary audio, etc.)
+uploads/

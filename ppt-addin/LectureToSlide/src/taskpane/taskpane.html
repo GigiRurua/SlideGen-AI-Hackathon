@@ -1,0 +1,138 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->
+<!-- This is a hackathon redesign for an AI Slide Generator (SlideGen AI) add-in. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SlideGen AI</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+    <!-- Fonts: Inter as a clean modern font, fallback to Segoe UI and Arial -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- No extra UI frameworks for simplicity -->
+
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: #f7faff;
+            margin: 0;
+            padding: 0;
+            color: #233962;
+        }
+
+        .slidegen-container {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(44,104,255,0.04);
+            margin: 32px 18px 18px 18px;
+            padding: 32px 22px 22px 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .slidegen-header {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2153f3;
+            text-align: center;
+            margin-bottom: 26px;
+            letter-spacing: 0.02em;
+        }
+
+        .slidegen-label {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #1951b8;
+            margin-top: 16px;
+        }
+
+        .slidegen-joincode-input {
+            letter-spacing: 0.22em;
+            font-size: 1.4rem;
+            text-align: center;
+            border: 1.5px solid #d3e1fc;
+            border-radius: 7px;
+            padding: 10px 0;
+            outline: none;
+            width: 100%;
+            max-width: 184px;
+            align-self: center;
+
+            background: #fafdff;
+            color: #2153f3;
+            margin-bottom: 20px;
+            transition: border 0.2s;
+        }
+        .slidegen-joincode-input:focus {
+            border-color: #2153f3;
+            background: #f4f9ff;
+        }
+
+        .slidegen-btn {
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #2565e1 0%, #2175fa 98%);
+            color: #fff;
+            padding: 12px;
+            cursor: pointer;
+            transition: background 0.18s;
+            margin-top: 8px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 10px rgba(45,100,255,0.10);
+        }
+        .slidegen-btn:hover {
+            background: linear-gradient(90deg, #1e56c7 0%, #1660dd 100%);
+        }
+
+        .slidegen-status {
+            text-align: center;
+            font-size: 1rem;
+            color: #1951b8;
+            background: #ecf6ff;
+            padding: 10px 0 10px 0;
+            border-radius: 5px;
+            min-height: 22px;
+            margin-top: 8px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        @media (max-width: 450px) {
+            .slidegen-container {
+                margin: 8px 2px;
+                padding: 15px 3px;
+            }
+            .slidegen-header {
+                font-size: 1.4rem;
+            }
+            .slidegen-btn {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="ms-font-m">
+    <header><h1>SlideGen AI</h1></header>
+    <main>
+        <input type="text" id="join-code" placeholder="Enter 6-digit Code" maxlength="6">
+        <button id="sync-btn">Build My Slides</button>
+        <p id="status">Ready...</p>
+    </main>
+</body>
+
+</html>
