@@ -52,7 +52,7 @@ export default function App() {
     });
 
     try {
-      const response = await fetch('https://betty-quarter-both-rouge.trycloudflare.com/upload-data', {
+      const response = await fetch('https://listed-transaction-screw-phantom.trycloudflare.com/upload-data', {
         method: 'POST',
         body: formData,
         headers: { 'Content-Type': 'multipart/form-data' },

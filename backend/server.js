@@ -9,9 +9,20 @@ const fs = require('fs');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
+// Ensure directory exists
 if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
 
-app.use(cors({ origin: "*", methods: ["GET", "POST"] }));
+// --- 1. HACKATHON-PROOF CORS & EXPRESS 5 SETUP ---
+app.use(cors({
+    origin: '*', 
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
+// Use the named wildcard {*splat} to fix the Express 5 PathError
+app.options('/{*splat}', cors());
+
 app.use(express.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -19,85 +30,70 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 let slideStore = {};
 
+// --- 2. UPLOAD ENDPOINT (Mobile/Web) ---
 app.post('/upload-data', upload.single('audio'), async (req, res) => {
     let tempFilePath = null;
-
     try {
         let transcript = "";
-
-        // 1. TRANSCRIPTION (OpenAI Whisper)
+        
+        // Step 1: Transcription with Whisper
         if (req.file) {
-            // Force the .m4a extension on the temp file
             tempFilePath = req.file.path + '.m4a';
             fs.renameSync(req.file.path, tempFilePath);
-
+            
             console.log(`🎙️ Transcribing: ${tempFilePath}`);
-
             try {
-                // We wrap the stream in OpenAI.toFile to guarantee the headers are correct
                 const transcription = await openai.audio.transcriptions.create({
                     file: await OpenAI.toFile(fs.createReadStream(tempFilePath), 'lecture.m4a'),
                     model: "whisper-1",
                 });
                 transcript = transcription.text;
-                console.log("✅ Transcript:", transcript);
+                console.log("✅ Transcript generated");
             } catch (whisperError) {
-                console.error("Whisper rejected format, using demo fallback.");
-                transcript = "This is a lecture about innovation in AI and how automated slide generation saves time for students and professionals.";
+                console.error("Whisper Error:", whisperError.message);
+                transcript = "Fallback: Discussion about AI innovation and slide automation.";
             }
-
-            // Cleanup
             if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
-            tempFilePath = null;
         } else {
             transcript = req.body.transcript || "No audio provided.";
         }
 
-        // 2. INTELLIGENCE (Anthropic Claude 4.5 Sonnet)
+        // Step 2: Generation with Claude 4.5
         const msg = await anthropic.messages.create({
-            model: "claude-sonnet-4-5-20250929", 
+            model: "claude-sonnet-4-5", 
             max_tokens: 4096,
-            system: `You are a universal information architect. Transform the input into a 5-slide presentation.
-            Return ONLY a valid JSON object:
-            {
-              "slides": [
-                {
-                  "title": "Slide Title",
-                  "bullets": ["Detail 1", "Detail 2", "Detail 3", "Detail 4", "Detail 5"],
-                  "notes": "Speaker notes for the student...",
-                  "layout": "TITLE_AND_CONTENT"
-                }
-              ]
-            }`,
+            system: `You are a presentation expert. Return ONLY valid JSON: {"slides": [{"title": "...", "bullets": ["..."], "notes": "..."}]}`,
             messages: [{ role: "user", content: transcript }],
         });
 
-        // 3. CLEAN & PARSE JSON
-        let rawText = msg.content[0].text;
-        const cleanJson = rawText.replace(/```json|```/g, "").trim();
-
-        try {
-            const aiResponse = JSON.parse(cleanJson);
-            const joinCode = Math.floor(100000 + Math.random() * 900000).toString();
-            
-            slideStore[joinCode] = aiResponse.slides;
-            console.log(`✨ Success! Session Created: ${joinCode}`);
-            res.json({ joinCode });
-        } catch (parseError) {
-            console.error("JSON Parsing failed. Raw Output:", rawText);
-            res.status(500).json({ error: "AI returned malformed JSON" });
-        }
+        const rawText = msg.content[0].text;
+        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+        const aiResponse = JSON.parse(jsonMatch ? jsonMatch[0] : rawText);
+        
+        const joinCode = Math.floor(100000 + Math.random() * 900000).toString();
+        slideStore[joinCode] = aiResponse.slides;
+        
+        console.log(`✨ Session Created: ${joinCode}`);
+        res.json({ joinCode });
 
     } catch (error) {
         console.error("Pipeline Error:", error);
-        if (tempFilePath && fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
         res.status(500).json({ error: "Pipeline Failed" });
     }
 });
 
+// --- 3. FETCH ENDPOINT (PowerPoint Add-in) ---
 app.get('/fetch-slides/:code', (req, res) => {
     const data = slideStore[req.params.code];
+    console.log(`📥 Fetch request for code: ${req.params.code} - Found: ${!!data}`);
+    
+    // Explicitly send 200 even if data is missing to prevent Add-in "Connection Lost" errors
     res.status(200).json(data || []);
 });
 
-app.listen(8080, '0.0.0.0', () => console.log("🚀 Server running on port 8080"));
+// Start Server
+const PORT = 8080;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`👉 Cloudflare Tunnel must point to: http://localhost:${PORT}`);
+});
