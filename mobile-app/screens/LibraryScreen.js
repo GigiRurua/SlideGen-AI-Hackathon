@@ -302,7 +302,6 @@ export default function LibraryScreen({ navigation }) {
       <StatusBar style="dark" />
 
       <View style={styles.header}>
-        <Ionicons name="menu" size={28} color="#007AFF" />
         <Text style={styles.headerTitle}>Library</Text>
       </View>
 
