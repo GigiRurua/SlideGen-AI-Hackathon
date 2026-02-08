@@ -6,8 +6,7 @@ import { Audio } from 'expo-av';
 import { Swipeable } from 'react-native-gesture-handler';
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
-
-const BACKEND_UPLOAD_URL = 'https://listed-transaction-screw-phantom.trycloudflare.com/upload-data';
+import { BACKEND_URL } from '../config';
 
 const INITIAL_LECTURES = [
   { id: '1', title: 'Computer Science Lecture I', date: 'Feb. 4th, 2026', duration: '1 hr 32 mins 24 secs', icon: '💻', color: '#4CBBFF', transcript: 'TBD' },
@@ -56,19 +55,20 @@ export default function LibraryScreen({ navigation }) {
       type: 'audio/m4a',
     });
     try {
-      const response = await fetch(BACKEND_UPLOAD_URL, {
+      const response = await fetch(`${BACKEND_URL}/upload-data`, {
         method: 'POST',
         body: formData,
-        headers: { 'Content-Type': 'multipart/form-data' },
       });
-      const data = await response.json();
-      if (data.joinCode) {
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data.joinCode) {
         return { joinCode: data.joinCode };
       }
-      throw new Error('No code returned');
+      const msg = data.error || data.message || (response.ok ? 'No code returned' : `Server error ${response.status}`);
+      Alert.alert('Upload failed', msg);
+      return null;
     } catch (error) {
       console.log('Upload Error:', error);
-      Alert.alert('Error', 'Server unreachable or file format invalid.');
+      Alert.alert('Upload failed', error.message || 'Server unreachable. Check BACKEND_URL in config.js and that the tunnel is running.');
       return null;
     } finally {
       setUploading(false);
@@ -325,7 +325,11 @@ export default function LibraryScreen({ navigation }) {
         contentContainerStyle={styles.listContainer}
       />
 
-      <TouchableOpacity style={styles.recordButton} onPress={startRecording} disabled={uploading}>
+      <TouchableOpacity
+        style={styles.recordButton}
+        onPress={() => navigation.navigate('Recording')}
+        disabled={uploading}
+      >
         <View style={styles.recordButtonInner} />
       </TouchableOpacity>
 

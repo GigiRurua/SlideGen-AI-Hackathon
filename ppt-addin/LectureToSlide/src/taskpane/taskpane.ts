@@ -25,7 +25,7 @@ async function generateSlidesFromAI() {
     statusMsg.innerText = "🚀 Fetching presentation...";
     statusMsg.classList.add("loading-pulse");
 
-    const baseUrl = "https://listed-transaction-screw-phantom.trycloudflare.com";
+    const baseUrl = "https://modelling-surgeons-victory-suburban.trycloudflare.com";
     const url = `${baseUrl}/fetch-slides/${code}`;
 
     try {
