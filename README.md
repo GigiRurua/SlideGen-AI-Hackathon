@@ -1,6 +1,6 @@
 <img width="679" height="351" alt="Screenshot 2026-02-07 at 7 51 12 PM" src="https://github.com/user-attachments/assets/faae4de9-60eb-4f79-bf82-1b941c4ca407" />
 
-**SlideGen AI - Turn spoken lectures into polished presentations in seconds.**
+**SlideGen AI - Turn spoken lectures into polished presentations in a blink of a eye.**
 
 <img width="679" alt="Screenshot 2026-02-07 at 8 13 18 PM" src="https://github.com/user-attachments/assets/19c5c159-407f-444b-bab3-e4c048b97039" />
 
