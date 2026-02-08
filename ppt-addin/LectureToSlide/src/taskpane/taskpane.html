@@ -89,6 +89,32 @@
             margin-top: 20px;
             font-weight: 500;
             border: 1px solid #E5E5EA;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .slidegen-status--success {
+            color: #1a7f37;
+            border-color: #2da44e;
+            background: #dafbe1;
+        }
+        .slidegen-success-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #2da44e;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .slidegen-success-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
         .loading-pulse { animation: pulse 1.5s infinite ease-in-out; }
         @keyframes pulse {
