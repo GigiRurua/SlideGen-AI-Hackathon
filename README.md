@@ -1,6 +1,6 @@
-# Lecture to Slide — AI Slide Generator
+<img width="679" height="351" alt="Screenshot 2026-02-07 at 7 51 12 PM" src="https://github.com/user-attachments/assets/faae4de9-60eb-4f79-bf82-1b941c4ca407" />
 
-**Turn spoken lectures into polished presentations in seconds.**
+**SlideGen AI - Turn spoken lectures into polished presentations in seconds.**
 
 An end-to-end AI pipeline that transcribes audio with **OpenAI Whisper**, generates structured slide content with **Anthropic Claude 4.5**, and delivers slides to **PowerPoint** and a **mobile recording app**. Built for educators, students, and professionals who want to go from voice to deck without manual work.
 
