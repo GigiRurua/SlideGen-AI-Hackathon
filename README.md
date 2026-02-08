@@ -11,7 +11,7 @@ An end-to-end AI pipeline that transcribes audio with **OpenAI Whisper**, genera
 
 ## Overview
 
-Lecture to Slide records or accepts lecture audio, transcribes it with Whisper, and uses Claude 4.5 to produce a 5-slide presentation (titles, bullets, speaker notes). You get a **6-digit join code** to pull the same slides into the PowerPoint add-in or to share with others.
+Lecture to Slide records or accepts lecture audio, transcribes it with Whisper, and uses Claude 4.5 to produce a 5-slide presentation (titles, bullets, speaker notes). You get a **6-digit join code** to pull the same slides into the PowerPoint add-in or to share with others. nnnjnjnjnjnjnjnjjn
 
 | Component        | Role |
 |-----------------|------|
