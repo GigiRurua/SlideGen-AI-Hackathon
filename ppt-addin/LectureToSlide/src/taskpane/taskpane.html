@@ -11,100 +11,86 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        html, body { width: 100%; height: 100%; margin: 0; padding: 0; box-sizing: border-box; }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Inter', 'Segoe UI', sans-serif;
-            background: #ffffff; /* Clean White Background */
-            margin: 0;
-            padding: 0;
+            background: #F2F2F7;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-
         .slidegen-container {
-            margin: 20px;
+            width: 100%;
+            max-width: 320px;
             display: flex;
             flex-direction: column;
             align-items: stretch;
         }
-
         .slidegen-header {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: #2189d1; /* Your Brand Blue */
+            color: #007AFF;
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
-
         .slidegen-label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #666;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #8E8E93;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 8px;
-            text-align: center;
         }
-
         .slidegen-joincode-input {
-            letter-spacing: 0.3em;
-            font-size: 1.5rem;
+            letter-spacing: 0.4em;
+            font-size: 1.4rem;
+            font-weight: 700;
             text-align: center;
-            border: 2px solid #e1e8f0;
-            border-radius: 10px;
-            padding: 12px;
+            border: 1px solid #E5E5EA;
+            border-radius: 12px;
+            padding: 14px 16px;
             outline: none;
-            width: 80%;
-            align-self: center;
-            background: #f9fbff;
-            color: #2189d1;
+            width: 100%;
+            background: #fff;
+            color: #007AFF;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
         }
-
         .slidegen-joincode-input:focus {
-            border-color: #2189d1;
-            box-shadow: 0 0 8px rgba(33, 137, 209, 0.2);
+            border-color: #007AFF;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
         }
-
         .slidegen-btn {
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 600;
             border: none;
-            border-radius: 10px;
-            background: #2189d1;
+            border-radius: 12px;
+            background: #007AFF;
             color: #fff;
-            padding: 15px;
+            padding: 16px;
             cursor: pointer;
-            transition: transform 0.1s, background 0.2s;
-            box-shadow: 0 4px 6px rgba(33, 137, 209, 0.2);
+            transition: background 0.2s, transform 0.1s;
         }
-
-        .slidegen-btn:hover {
-            background: #1a6da7;
-        }
-
-        .slidegen-btn:active {
-            transform: scale(0.98);
-        }
-
+        .slidegen-btn:hover { background: #0066DD; }
+        .slidegen-btn:active { transform: scale(0.98); }
         .slidegen-status {
             text-align: center;
-            font-size: 0.85rem;
-            color: #2189d1;
-            background: #f0f7ff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #007AFF;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-top: 20px;
             font-weight: 500;
-            border: 1px solid #d0e4f7;
+            border: 1px solid #E5E5EA;
         }
-
-        /* Loading animation for status */
-        .loading-pulse {
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-
+        .loading-pulse { animation: pulse 1.5s infinite ease-in-out; }
         @keyframes pulse {
             0% { opacity: 0.6; }
             50% { opacity: 1; }
@@ -116,15 +102,11 @@
 <body>
     <div class="slidegen-container">
         <div class="slidegen-header">SlideGen AI</div>
-        
-        <div class="slidegen-label">ENTER SESSION CODE</div>
-        <input type="text" id="join-code" class="slidegen-joincode-input" placeholder="000000" maxlength="6">
-        
-        <button id="sync-btn" class="slidegen-btn">Build My Slides</button>
-        
+        <div class="slidegen-label">PowerPoint sync code</div>
+        <input type="text" id="join-code" class="slidegen-joincode-input" placeholder="000000" maxlength="6" inputmode="numeric">
+        <button type="button" id="sync-btn" class="slidegen-btn">Build My Slides</button>
         <div id="status" class="slidegen-status">Ready to sync...</div>
     </div>
-
-    </body>
+</body>
 
 </html>

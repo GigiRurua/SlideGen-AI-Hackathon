@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "dotenv": "^17.2.4",
-    "openai": "^6.18.0"
+    "expo": "^54.0.33",
+    "openai": "^6.18.0",
+    "react-dom": "^19.2.4",
+    "react-native": "^0.83.1",
+    "react-native-web": "^0.21.2"
   }
 }

@@ -73,35 +73,28 @@ async function generateSlidesFromAI() {
         sidebar.fill.setSolidColor("#2189d1");
         sidebar.lineFormat.visible = false;
     
-        // 2. Title - Separate text assignment
-        const titleBox = shapes.addTextBox();
-        titleBox.textFrame.textRange.text = data.title || "Untitled Slide";
-        titleBox.left = 50;
-        titleBox.top = 40;
-        titleBox.width = 620;
-        titleBox.height = 60;
+        // 2. Title - addTextBox(text, options)
+        const titleBox = shapes.addTextBox(data.title || "Untitled Slide", {
+          left: 50, top: 40, width: 620, height: 60
+        });
         titleBox.textFrame.textRange.font.bold = true;
         titleBox.textFrame.textRange.font.size = 32;
         titleBox.textFrame.textRange.font.color = "#2189d1";
     
-        // 3. Body Bullets
+        // 3. Body Bullets - addTextBox(text, options)
         const bodyText = Array.isArray(data.bullets) ? data.bullets.join("\n• ") : data.bullets;
-        const bodyBox = shapes.addTextBox();
-        bodyBox.textFrame.textRange.text = bodyText.startsWith("•") ? bodyText : "• " + bodyText;
-        bodyBox.left = 50;
-        bodyBox.top = 120;
-        bodyBox.width = 620;
-        bodyBox.height = 300;
+        const bodyContent = bodyText.startsWith("•") ? bodyText : "• " + bodyText;
+        const bodyBox = shapes.addTextBox(bodyContent, {
+          left: 50, top: 120, width: 620, height: 300
+        });
         bodyBox.textFrame.textRange.font.size = 18;
         bodyBox.textFrame.textRange.font.color = "#333333";
 
-        // 4. AI Speaker Notes
-        const notesBox = shapes.addTextBox();
-        notesBox.textFrame.textRange.text = `💡 AI NOTES: ${data.notes || ""}`;
-        notesBox.left = 50;
-        notesBox.top = 460;
-        notesBox.width = 620;
-        notesBox.height = 60;
+        // 4. AI Speaker Notes - addTextBox(text, options)
+        const notesText = `💡 AI NOTES: ${data.notes || ""}`;
+        const notesBox = shapes.addTextBox(notesText, {
+          left: 50, top: 460, width: 620, height: 60
+        });
         notesBox.textFrame.textRange.font.size = 10;
         notesBox.textFrame.textRange.font.color = "#888888";
         notesBox.textFrame.textRange.font.italic = true;
