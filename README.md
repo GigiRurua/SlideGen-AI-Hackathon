@@ -11,7 +11,7 @@ An end-to-end AI pipeline that transcribes audio with **OpenAI Whisper**, genera
 
 ## Overview
 
-Lecture to Slide records or accepts lecture audio, transcribes it with Whisper, and uses Claude 4.5 to produce a 5-slide presentation (titles, bullets, speaker notes). You get a **6-digit join code** to pull the same slides into the PowerPoint add-in or to share with others. nnnjnjnjnjnjnjnjjn
+SlideGen AI is an AI-powered workflow that converts live or recorded audio (lectures, meetings, etc.) into structured presentation content. The system transcribes audio using Whisper and uses Claude 4.5 to automatically generate presentations (e.g., titles, bullet points, speaker notes, lessons learned, etc.). You get a unique **6-digit join code** to pull the same slides into the PowerPoint add-in or to share with others.
 
 | Component        | Role |
 |-----------------|------|
@@ -82,7 +82,7 @@ npm install
 npx expo start
 ```
 
-Record a lecture, tap to upload; the 6-digit join code is shown on success.
+Record a lecture or choose an audio file from the library, then tap Upload. A 6-digit join code will be displayed upon successful upload.
 
 ### PowerPoint add-in
 
